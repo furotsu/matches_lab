@@ -45,6 +45,7 @@ class GameScreen:
     def draw_matches(self):
         self.matches.draw_visible_matches(self.canvas, level1["start"])
 
+
     def draw_spaces(self):
         self.matches.draw_invisible_matches(self.canvas, level1["start"], "yellow")
 
