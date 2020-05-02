@@ -4,7 +4,10 @@ from game_screen import GameScreen
 
 class Gui(MainMenu, GameScreen):
     def __init__(self, root):
-        super().__init__(root)
+        MainMenu.__init__(self, root)
+        GameScreen.__init__(self, root)
+
+        self.game_started = False
 
     def _set_start_button(self):
         super()._set_start_button()
@@ -21,6 +24,3 @@ class Gui(MainMenu, GameScreen):
     def back_to_menu(self):
         super().hide_game_screen()
         super().set_main_menu()
-
-
-
