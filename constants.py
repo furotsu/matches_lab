@@ -12,11 +12,15 @@ MATCH_INDENT_X = 100
 MATCH_INDENT_Y = -50
 
 INDENT_BETWEEN_MATCHES = 130
-MATCH_WIDTH = 8
+MATCH_WIDTH = 15
 
 FIELD_POWER = 3
 
-GAME_FRAME_BG = "lightgrey"
+GAME_FRAME_BG = "cyan"
+
+LEVEL_STORAGE = "data/levels.json"
+
+FULL_BOARD = [1 for i in range(42)]
 
 
-GAME_TITLE = "Dont play with fire v0.03"
+GAME_TITLE = "Don't play with fire v0.05"
