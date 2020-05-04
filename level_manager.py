@@ -14,10 +14,28 @@ class LevelManager:
         return levels
 
     def write_level(self, level: dict):
-        file = []
         with open(self.file, 'r') as a:
             file = json.load(a)
-        file.apped(level)
+        level["current"] = level["start"]
+        file.append(level)
         with open(self.file, 'w') as b:
             json.dump(file, b)
 
+    def delete_level(self, level_index):
+        with open(self.file, 'r') as a:
+            file = json.load(a)
+        file.pop(level_index)
+        with open(self.file, 'w') as b:
+            json.dump(file, b)
+
+    @property
+    def LevelsAmount(self):
+        with open(self.file, 'r') as a:
+            file = json.load(a)
+            return len(file)
+
+
+"""
+a = LevelManager("data/levels.json")
+a.delete_level(2)
+"""

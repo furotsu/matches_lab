@@ -6,7 +6,7 @@ from constants import *
 class LevelBuilder:
     def __init__(self, root):
         self.root = root
-        self.start_field = [1 for i in range(42)]
+        self.start_field = [0 for i in range(42)]
         self.result_field = [0 for i in range(42)]
 
         self._create_builder_screen()
@@ -34,20 +34,23 @@ class LevelBuilder:
         self._remove_button.configure(command=self._remove_match)
         self._remove_button.place(relx=0.6, rely=0.8)
 
+    def _create_save_button(self):
+        self._save_button = Button(self.builder_frame, text="Save current puzzle", relief=RAISED)
+        self._save_button.configure(bg="yellow", width=20, height=2)
+        self._save_button.place(relx=0.4, rely=0.01)
+
     def _create_back_button3(self):
         self._back_button3 = Button(self.builder_frame, text="Back to main menu", relief=RAISED)
         self._back_button3.configure(bg="blue", width=15, height=2)
         self._back_button3.place(relx=0.38, rely=0.9)
 
     def builder_click(self, event):
-        """check for click on match after that:
-            1) if click on existed match highlights it and all possible places to set it
-            2) if click on non-existed match while existed already chosen place it on that spot
-                and check if current matches layout is winning"""
+        """check for click on match and highlights it after what """
         self.draw_builder_matches()
         flag1 = self.paint_matches(self.start_matches, self.start_field, event, 0)
         flag2 = self.paint_matches(self.result_matches, self.result_field, event, 1)
         if flag1 and flag2:
+            print('dfdfdfdfdf')
             self.hide_builder_spaces()
             self.draw_builder_matches()
 
@@ -55,11 +58,15 @@ class LevelBuilder:
         for i in range(matches.Length):
             if board[i] and matches[i].inside_of_rectangle([event.x, event.y]):
                 print(i)
+                self.hide_builder_spaces()
+                self.draw_builder_matches()
                 matches[i].draw(self.builder_canvas, 'red')
                 self.chosen_match = (square, i)
                 return True
             elif not board[i] and matches[i].inside_of_rectangle([event.x, event.y]):
                 print(i)
+                self.hide_builder_spaces()
+                self.draw_builder_matches()
                 matches[i].draw(self.builder_canvas, 'red')
                 self.chosen_match = (square, i)
                 return True
@@ -106,6 +113,7 @@ class LevelBuilder:
         self.hide_builder_spaces()
         self._create_add_button()
         self._create_remove_button()
+        self._create_save_button()
         self._create_back_button3()
 
     def set_level_builder(self):
