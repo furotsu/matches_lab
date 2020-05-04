@@ -101,14 +101,11 @@ class GameScreen:
         self.refresh_game_elements()
 
     def _to_next_level(self):
-        try:
-            self._reset_current_level()
-            self._current_level_index += 1
-            self.current_level = self._levels[self._current_level_index]
-            self.hide_win_frame()
-            self.refresh_game_elements()
-        except IndexError as e:
-            self.hide_game_screen() # TODO
+        self._reset_current_level()
+        self._current_level_index += 1
+        self.current_level = self._levels[self._current_level_index]
+        self.hide_win_frame()
+        self.refresh_game_elements()
 
     def _create_matches(self):
         self.matches = Matches(FIELD_POWER)

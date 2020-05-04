@@ -8,6 +8,8 @@ class LevelBuilder:
         self.root = root
         self.start_field = [0 for i in range(42)]
         self.result_field = [0 for i in range(42)]
+        self.level_description = ""
+        self._level_description = StringVar()
 
         self._create_builder_screen()
         self.chosen_match = (0, -1)
@@ -38,6 +40,26 @@ class LevelBuilder:
         self._save_button = Button(self.builder_frame, text="Save current puzzle", relief=RAISED)
         self._save_button.configure(bg="yellow", width=20, height=2)
         self._save_button.place(relx=0.4, rely=0.01)
+
+    def _create_builder_entry(self):
+        self._entry = Entry(self._entry_description_frame, textvariable=self._level_description)
+        self._entry.configure(width=25)
+        self._entry.pack(side=BOTTOM, anchor=W)
+
+    def _create_builder_entry_button(self):
+        self._builder_entry_button = Button(self._entry_description_frame, text="ok")
+        self._builder_entry_button.configure(command=self._save_description)
+        self._builder_entry_button.pack(side=RIGHT)
+
+    def _create_builder_entry_label(self):
+        self._builder_entry_label = Label(self._entry_description_frame, text="Enter a level description:")
+        self._builder_entry_label.configure(font=("Lora", 8, "bold"), bd=3, bg="lightyellow")
+        self._builder_entry_label.pack(side=TOP)
+
+    def _create_builder_entry_frame(self):
+        self._entry_description_frame = Frame(self.builder_frame)
+        self._entry_description_frame.configure(width=150, height=150, bg="lightgreen")
+        self._entry_description_frame.place(relx=0.01, rely=0.01)
 
     def _create_back_button3(self):
         self._back_button3 = Button(self.builder_frame, text="Back to main menu", relief=RAISED)
@@ -93,6 +115,10 @@ class LevelBuilder:
         self.hide_builder_spaces()
         self.draw_builder_matches()
 
+    def _save_description(self):
+        self.level_description = self._level_description.get()
+        print(self.level_description)
+
     def _create_builder_matches(self):
         self.start_matches = Matches(FIELD_POWER, 100, 20, -50)
         self.result_matches = Matches(FIELD_POWER, 100, 400, -50)
@@ -115,6 +141,10 @@ class LevelBuilder:
         self._create_remove_button()
         self._create_save_button()
         self._create_back_button3()
+        self._create_builder_entry_frame()
+        self._create_builder_entry()
+        self._create_builder_entry_button()
+        self._create_builder_entry_label()
 
     def set_level_builder(self):
         self.builder_frame.place(relx=0.01, rely=0.01)

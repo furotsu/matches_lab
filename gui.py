@@ -51,10 +51,17 @@ class Gui(MainMenu, GameScreen, LevelBuilder, LevelChooser):
         super()._create_back_button4()
         self._back_button4.configure(command=self.back_to_menu)
 
+    def _to_next_level(self):
+        try:
+            super()._to_next_level()
+        except IndexError as e:
+            self.back_to_menu()
+
     def save_level(self):
-        level = {"start": self.start_field, "expected": self.result_field}
+        level = {"start": self.start_field, "expected": self.result_field, "task": self.level_description}
         self.level_manager.write_level(level)
         self._levels = self.level_manager.load_levels()
+        self.root.quit()
 
     def choose_level(self):
         super().hide_main_menu()
