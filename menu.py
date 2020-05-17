@@ -2,6 +2,7 @@ from constants import *
 
 
 class MainMenu:
+    """main menu screen that leads to all game screens"""
     def __init__(self, root):
         self.root = root
         self.s_width, self.s_height = SCREEN_WIDTH, SCREEN_HEIGHT

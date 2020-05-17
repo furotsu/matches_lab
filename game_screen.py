@@ -3,6 +3,8 @@ from constants import *
 
 
 class GameScreen:
+    """main game screen that controls all actions on the game field, like:
+        creating levels, managing matches, showing win message."""
     def __init__(self, root, levels):
         self.root = root
         self.game_started = False
@@ -60,8 +62,9 @@ class GameScreen:
         self._reset_button.configure(command=self._reset_current_level)
 
     def _create_task_label(self):
-        self._task_label = Label(self.game_frame, text=self.current_level["task"])
-        self._task_label.configure(bg="pink", font=("Lora", 18, "bold"), bd=5)
+        text = self.current_level["task"]
+        self._task_label = Label(self.game_frame, text=text)
+        self._task_label.configure(bg="grey", font=("Lora", 18, "bold"), bd=5)
         self._task_label.place(relx=0.1, rely=0.01)
 
     def _create_win_label(self):
@@ -141,7 +144,11 @@ class GameScreen:
         self.matches.draw_invisible_matches(self.canvas, self.current_level["current"], GAME_FRAME_BG)
 
     def refresh_game_elements(self):
-        self._task_label["text"] = self.current_level["task"]
+        text = self.current_level["task"]
+        if text == "":
+            print('dfdfddfddf')
+            text = "No information about this level was given by creator"
+        self._task_label["text"] = text
         self.hide_spaces()
         self.draw_matches()
 

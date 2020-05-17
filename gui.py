@@ -7,6 +7,7 @@ from constants import *
 
 
 class Gui(MainMenu, GameScreen, LevelBuilder, LevelChooser):
+    """class that gathers all game screens to manage transitions between it"""
     def __init__(self, root):
         self.level_manager = LevelManager(LEVEL_STORAGE)
 
@@ -66,9 +67,11 @@ class Gui(MainMenu, GameScreen, LevelBuilder, LevelChooser):
         self._back_button4.configure(command=self.back_to_menu)
 
     def _to_next_level(self):
+        """if you press 'next level' button on last level
+            redirects you to main menu"""
         try:
             super()._to_next_level()
-        except IndexError as e:
+        except IndexError:
             self.back_to_menu()
 
     def save_level(self):

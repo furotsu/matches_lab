@@ -3,6 +3,7 @@ from math import fabs, sqrt
 
 
 class Matches:
+    """creates group(field) of matches that can be drawn selectively"""
     def __init__(self, field_power, indent=INDENT_BETWEEN_MATCHES, indent_x=MATCH_INDENT_X, indent_y=MATCH_INDENT_Y):
         self.field_power = field_power
 
@@ -20,6 +21,7 @@ class Matches:
                 self.matches[i].draw(canvas, color)
 
     def _create_matches(self):
+        """create field of matches (square-shape)"""
         self.matches = []
         for i in range(len(self.cells)):
             try:
@@ -52,6 +54,9 @@ class Matches:
 
 
 class Match:
+    """creates match(line) between two cells
+        you can draw in on the canvas and
+        check if given point is within this match"""
     def __init__(self, coords: list):
         self.coords = [coords[0], coords[1],
                        coords[2], coords[3]]
@@ -60,7 +65,9 @@ class Match:
         canvas.create_line(self.coords, fill=color, width=MATCH_WIDTH)
 
     def inside_of_rectangle(self, point: list) -> bool:
-        """check if point is within a rectangle"""
+        """check if point is within a rectangle
+            by comparing scalar product of the vectors, created by rectangle vertices,
+            that are calculated on the place and point coords"""
 
         px, py = point[0], point[1]
         x1, x2, x3, y1, y2, y3 = [1 for i in range(6)]
@@ -109,6 +116,8 @@ class Match:
 
 
 class Cell:
+    """creates cell(point) on the screen that can be connected to another
+        cell to make match"""
     def __init__(self, pos_x, pos_y):
         self.pos_x, self.pos_y = pos_x, pos_y
 

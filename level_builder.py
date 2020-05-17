@@ -1,9 +1,9 @@
 from matches import Matches
-from level_manager import LevelManager
 from constants import *
 
 
 class LevelBuilder:
+    """screen on which you can create your own level"""
     def __init__(self, root):
         self.root = root
         self.start_field = [0 for i in range(42)]
@@ -71,10 +71,6 @@ class LevelBuilder:
         self.draw_builder_matches()
         flag1 = self.paint_matches(self.start_matches, self.start_field, event, 0)
         flag2 = self.paint_matches(self.result_matches, self.result_field, event, 1)
-        if flag1 and flag2:
-            print('dfdfdfdfdf')
-            self.hide_builder_spaces()
-            self.draw_builder_matches()
 
     def paint_matches(self, matches, board, event, square):
         for i in range(matches.Length):

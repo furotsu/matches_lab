@@ -2,6 +2,8 @@ from constants import *
 
 
 class LevelChooser:
+    """transitional screen on which you can choose level to play
+        or delete one level"""
     def __init__(self, root, levels_amount):
         self.root = root
         self.levels_amount = levels_amount

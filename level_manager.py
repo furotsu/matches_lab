@@ -2,6 +2,7 @@ import json
 
 
 class LevelManager:
+    """can load, write and delete levels to/from the memory"""
     def __init__(self, file):
         self.file = file
 

@@ -23,4 +23,4 @@ LEVEL_STORAGE = "levels.json"
 FULL_BOARD = [1 for i in range(42)]
 
 
-GAME_TITLE = "Don't play with fire v1.1"
+GAME_TITLE = "Don't play with fire v1.2"
