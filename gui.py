@@ -31,9 +31,23 @@ class Gui(MainMenu, GameScreen, LevelBuilder, LevelChooser):
         """ create buttons that lead calls start_game function
             with parameter of level which contains in its name (but["text"][-1])"""
         super()._create_levels_buttons()
+        self._prepare_levels_buttons()
+
+    def _create_delete_level_button(self):
+        super()._create_delete_level_button()
+        self._delete_level_button.configure(command=self.prepare_levels_to_anihilation)
+
+    def _prepare_levels_buttons(self):
         for i in range(self.levels_amount):
             lbut = self.levels_buttons[i]
             lbut.configure(command=lambda but=lbut: self.start_game(int(but["text"][-1])))
+
+    def prepare_levels_to_anihilation(self):
+        for i in range(self.levels_amount):
+            lbut = self.levels_buttons[i]
+            lbut.configure(command=lambda but=lbut:
+                            self.level_manager.delete_level(int(but["text"][-1])-1, self.root))
+        self.levels_ready_to_delete = True
 
     def _create_back_button(self):
         super()._create_back_button()
@@ -66,6 +80,9 @@ class Gui(MainMenu, GameScreen, LevelBuilder, LevelChooser):
     def choose_level(self):
         super().hide_main_menu()
         super().set_level_chooser()
+        if self.levels_ready_to_delete:
+            self._prepare_levels_buttons()
+            self.levels_ready_to_delete = False
 
     def start_game(self, level):
         print(level)

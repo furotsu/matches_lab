@@ -18,9 +18,9 @@ FIELD_POWER = 3
 
 GAME_FRAME_BG = "cyan"
 
-LEVEL_STORAGE = "data/levels.json"
+LEVEL_STORAGE = "levels.json"
 
 FULL_BOARD = [1 for i in range(42)]
 
 
-GAME_TITLE = "Don't play with fire v0.11"
+GAME_TITLE = "Don't play with fire v1.1"

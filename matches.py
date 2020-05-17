@@ -61,7 +61,6 @@ class Match:
 
     def inside_of_rectangle(self, point: list) -> bool:
         """check if point is within a rectangle"""
-        # TODO
 
         px, py = point[0], point[1]
         x1, x2, x3, y1, y2, y3 = [1 for i in range(6)]
@@ -114,6 +113,7 @@ class Cell:
         self.pos_x, self.pos_y = pos_x, pos_y
 
     def connect_to(self, other_cell):
+        """ create new match that lay between 2 cells"""
         return Match([self.pos_x, self.pos_y, other_cell.X, other_cell.Y])
 
     @property

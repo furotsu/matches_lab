@@ -21,12 +21,13 @@ class LevelManager:
         with open(self.file, 'w') as b:
             json.dump(file, b)
 
-    def delete_level(self, level_index):
+    def delete_level(self, level_index, root):
         with open(self.file, 'r') as a:
             file = json.load(a)
         file.pop(level_index)
         with open(self.file, 'w') as b:
             json.dump(file, b)
+        root.quit()
 
     @property
     def LevelsAmount(self):
@@ -35,7 +36,3 @@ class LevelManager:
             return len(file)
 
 
-"""
-a = LevelManager("data/levels.json")
-a.delete_level(2)
-"""

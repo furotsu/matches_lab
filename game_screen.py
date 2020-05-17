@@ -13,6 +13,7 @@ class GameScreen:
 
         self._create_game_screen()
         self.chosen_match = -1
+        self._match_is_highlighted = False
 
     def _create_game_frame(self):
         self.game_frame = Frame(self.root)
@@ -23,6 +24,18 @@ class GameScreen:
         self.canvas = Canvas(self.game_frame, width=CANVAS_WIDTH, height=CANVAS_HEIGHT, bg=GAME_FRAME_BG)
         self.canvas.focus_set()
         self.canvas.place(relx=CANVAS_REL_X, rely=CANVAS_REL_Y)
+
+    def _create_delete_button(self):
+        self._delete_button = Button(self.game_frame, text="Delete match", relief=RAISED)
+        self._delete_button.configure(bg="red", width=10, height=4)
+        self._delete_button.place(relx=0.8, rely=0.3)
+        self._delete_button.configure(command=self._delete_match)
+
+    def _create_append_button(self):
+        self._append_button = Button(self.game_frame, text="Add match", relief=RAISED)
+        self._append_button.configure(bg="green", width=10, height=4)
+        self._append_button.place(relx=0.8, rely=0.5)
+        self._append_button.configure(command=self._append_match)
 
     def _create_back_button(self):
         self._back_button = Button(self.game_frame, text="Back to main menu", relief=RAISED)
@@ -51,13 +64,11 @@ class GameScreen:
         self._task_label.configure(bg="pink", font=("Lora", 18, "bold"), bd=5)
         self._task_label.place(relx=0.1, rely=0.01)
 
-
     def _create_win_label(self):
         self._win_label = Label(self.win_frame, text="You solved this puzzle!\n "
                                                      "Wanna try next one or return to main menu?")
         self._win_label.configure(bg="grey", fg="darkred", font=("Lora", 18, "bold"), relief=SUNKEN, bd=5)
         self._win_label.place(relx=0.18, rely=0.1)
-
 
     def click(self, event):
         """check for click on match after that:
@@ -67,22 +78,32 @@ class GameScreen:
         self.draw_matches()
         for i in range(self.matches.Length):
             if self.current_level["current"][i] and self.matches[i].inside_of_rectangle([event.x, event.y]):
-                print(i)
                 self.draw_spaces()
                 self.matches[i].draw(self.canvas, 'red')
                 self.chosen_match = i
+                self._match_is_highlighted = True
                 return
             elif not self.current_level["current"][i] and self.matches[i].inside_of_rectangle(
-                    [event.x, event.y]) and self.chosen_match + 1:
+                    [event.x, event.y]) and self._match_is_highlighted:
                 self.current_level["current"][i] = 1
-                self.current_level["current"][self.chosen_match] = 0
+                if self.chosen_match != -1: self.current_level["current"][self.chosen_match] = 0
                 self.chosen_match = -1
                 self._check_for_win()
                 self.hide_spaces()
                 self.draw_matches()
                 return
-        # self.chosen_match = -1
+        self._match_is_highlighted = False
         self.refresh_game_elements()
+
+    def _delete_match(self):
+        self.current_level["current"][self.chosen_match] = 0
+        self.refresh_game_elements()
+        self._check_for_win()
+
+    def _append_match(self):
+        self.draw_spaces()
+        self._match_is_highlighted = True
+        self.chosen_match = -1
 
     def _check_for_win(self):
         for i in range(len(self.current_level["current"])):
@@ -131,6 +152,8 @@ class GameScreen:
         self._create_back_button()
         self.draw_matches()
         self._create_task_label()
+        self._create_append_button()
+        self._create_delete_button()
         self._create_win_frame()
         self._create_win_label()
         self._create_next_level_button()
